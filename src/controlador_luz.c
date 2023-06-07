@@ -34,14 +34,14 @@ static Resultado estadoApagado(Maquina *contexto,Evento evento){
         SP_Pin_setModo(self->interfazLuz.pin,SP_PIN_ENTRADA);       
         ControladorLuz__apagaLuz(self);                             //Apago la luz
         SP_Pin_setModo(self->interfazLuz.pin,SP_PIN_SALIDA);
-        r.codigo = EVENTO_PROCESADO;                               //Indico que hay un cambio de estado
+        r.codigo = RES_PROCESADO;                               //Indico que hay un cambio de estado
     break; case EV_BOTON_PULSADO:                                   //Si se pulsa el boton
         ControladorLuz__enciendeLuz(self);                          //Enciendo la luz
         DespachoRetardado_programarDespacho(self->despachoRetardado,contexto,EV_TIMEOUT,self->tiempoOn); //Configuro el Timeout           
         r.codigo = RES_TRANSICION;                               //Indico un cambio de estado
         r.nuevoEstado = estadoEncendido;                            //El nuevo estado será encendido
     break;default:
-        r.codigo = EVENTO_IGNORADO;                                 //Si pasa algun otro evento lo ignora
+        r.codigo = RES_IGNORADO;                                 //Si pasa algun otro evento lo ignora
     break;
     }
     return r;                                                       //Retorno el resultado con el código del mismo y el nuevo estado (de ser necesario)
@@ -58,7 +58,7 @@ static Resultado estadoEncendido(Maquina *contexto,Evento evento){
         r.codigo = RES_TRANSICION;                               
         r.nuevoEstado = estadoMudanza;                              //Paso al estado mudanza
     break;default:
-        r.codigo = EVENTO_IGNORADO;
+        r.codigo = RES_IGNORADO;
     break;
     }
     return r;
@@ -73,7 +73,7 @@ static Resultado estadoMudanza(Maquina *contexto,Evento evento){
         r.codigo = RES_TRANSICION;
         r.nuevoEstado = estadoApagado;
     break;default:
-        r.codigo = EVENTO_IGNORADO;
+        r.codigo = RES_IGNORADO;
     break;
     }
     return r;

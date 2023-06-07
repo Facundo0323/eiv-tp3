@@ -26,7 +26,7 @@ static Resultado estadoEspera(Maquina *contexto, Evento evento) {
         r.codigo = RES_TRANSICION;
         r.nuevoEstado = estadoCuenta;
     break;default:
-        r.codigo = EVENTO_IGNORADO;
+        r.codigo = RES_IGNORADO;
     break;
     }
     return r;
@@ -37,10 +37,9 @@ static Resultado estadoCuenta(Maquina *contexto, Evento evento) {
     Resultado r = {0};
     switch (evento) {
         case EV_BOTON_PULSADO:
-        if(self->contadorPulsaciones < 3) {
-            DespachoRetardado_programarDespacho(self->despachoRetardado,contexto,EV_TIMEOUT,self->tiempoPulsaciones);
+        if(self->contadorPulsaciones < 2) {
             self->contadorPulsaciones++;
-            r.codigo = EVENTO_PROCESADO;
+            r.codigo = RES_PROCESADO;
         }
         else {
             Maquina_despacha(self->destino,EV_TRIPLE_PULSACION);
@@ -51,7 +50,7 @@ static Resultado estadoCuenta(Maquina *contexto, Evento evento) {
             r.codigo = RES_TRANSICION;
             r.nuevoEstado = estadoEspera;
         break;default:
-        r.codigo = EVENTO_IGNORADO;
+        r.codigo = RES_IGNORADO;
         break;
     }
     return r;

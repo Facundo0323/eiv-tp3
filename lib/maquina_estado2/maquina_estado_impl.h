@@ -12,8 +12,8 @@
  * 
  */
 typedef enum codigoResultado {
-    EVENTO_IGNORADO,
-    EVENTO_PROCESADO,
+    RES_IGNORADO,
+    RES_PROCESADO,
     RES_TRANSICION
 } codigoResultado;
 
